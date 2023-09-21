@@ -3,17 +3,17 @@ import { Tile } from '../components/game-board/game-board.component';
 
 type Size = 6 | 9 | 16;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class TilesService {
   constructor() {}
 
-  generateTiles(size: Size) {
+  generateTiles(size: Size, amount: number = 7) {
     let TILES: Tile[] = [];
     while (TILES.length < size) {
-      const randomNumber: string = Math.round(Math.random() * 100).toString();
-      if (!TILES.includes({ text: randomNumber, clicked: false })) {
+      const randomNumber: string = Math.round(
+        Math.random() * amount
+      ).toString();
+      if (!TILES.some((tile) => tile.text === randomNumber)) {
         TILES.push({
           text: randomNumber,
           clicked: false,

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { GameBoardComponent } from 'src/app/components/game-board/game-board.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-game',
@@ -10,12 +11,20 @@ import { GameBoardComponent } from 'src/app/components/game-board/game-board.com
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss'],
 })
-export class GameComponent {
+export class GameComponent implements OnInit {
   timeLeft: number = 15;
   interval: any;
   points: number = 0;
   showGame: boolean = false;
   endGame: boolean = false;
+
+  ngOnInit() {
+    this.timeLeft = 15;
+    this.points = 0;
+    this.showGame = false;
+    this.endGame = false;
+  }
+
   startTimer() {
     this.showGame = true;
     this.interval = setInterval(() => {
@@ -32,5 +41,6 @@ export class GameComponent {
     this.showGame = false;
     this.endGame = false;
     this.timeLeft = 15;
+    this.points = 0;
   }
 }

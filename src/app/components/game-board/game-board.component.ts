@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule, NgForOf } from '@angular/common';
 import { GameTileComponent } from './game-tile/game-tile.component';
 import { TilesService } from 'src/app/services/tiles.service';
-import { generate } from 'rxjs';
 
 export type Tile = {
   text: string;
@@ -15,6 +14,7 @@ export type Tile = {
   imports: [CommonModule, GameTileComponent, NgForOf],
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.scss'],
+  providers: [TilesService],
 })
 export class GameBoardComponent implements OnInit {
   @Input() points!: number;
@@ -36,7 +36,10 @@ export class GameBoardComponent implements OnInit {
       if (clicked.every((tile) => tile.text === clicked[0].text)) {
         console.log('next level');
         this.pointsChange.emit(this.points + 1);
-        this.listOfTiles = this.tilesService.generateTiles(6);
+        this.listOfTiles = this.tilesService.generateTiles(
+          6,
+          7 + this.points * 6
+        );
       } else {
         console.log('try again');
         this.listOfTiles.map((tile) => (tile.clicked = false));
