@@ -1,0 +1,18 @@
+<ng-container *ngIf="!showGame; else show">
+  <a routerLink="/homepage"><h3>go back to homepage</h3> </a>
+  <button (click)="startTimer()">START GAME</button>
+</ng-container>
+
+<ng-template #show>
+  <ng-container *ngIf="!endGame; else end">
+    <div class="statsBar">
+      <p>timeLeft: {{ timeLeft }}</p>
+      <p>points: {{ points }}</p>
+    </div>
+    <app-game-board [(points)]="points"></app-game-board>
+  </ng-container>
+</ng-template>
+<ng-template #end>
+  You have aquired: {{ points }} points
+  <button (click)="playAgain()">play again</button>
+</ng-template>

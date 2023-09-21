@@ -1,0 +1,6 @@
+<app-game-tile
+  *ngFor="let tile of listOfTiles; index as i"
+  [tile]="tile"
+  [index]="i"
+  (indexOutput)="changeClicked($event)"
+></app-game-tile>
