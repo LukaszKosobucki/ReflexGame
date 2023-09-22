@@ -1,6 +1,8 @@
 {
   "name": "reflex-game",
   "version": "0.0.0",
+  "private": true,
+  "homepage": "https://www.reflex-game.lukaszkosobucki.pl",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
