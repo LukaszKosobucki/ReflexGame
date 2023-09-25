@@ -7,6 +7,15 @@ type Size = 6 | 9 | 16;
 export class TilesService {
   constructor() {}
 
+  calculateSize(points: number) {
+    const sizeObject: any = { 1: 6, 2: 9, 3: 16 };
+    const level = 1.1 ** points;
+
+    return sizeObject[
+      Math.round(level) > 3 ? 3 : (Math.round(level) as number)
+    ];
+  }
+
   generateTiles(size: Size, amount: number = 7) {
     let TILES: Tile[] = [];
     while (TILES.length < size) {

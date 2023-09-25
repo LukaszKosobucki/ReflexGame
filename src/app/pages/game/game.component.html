@@ -7,13 +7,13 @@
   <ng-container *ngIf="!endGame; else end">
     <div class="statsBar">
       <p>timeLeft: {{ timeLeft }}</p>
-      <p>points: {{ points }}</p>
+      <p>level: {{ points }}</p>
     </div>
-    <app-game-board [(points)]="points"></app-game-board>
+    <app-game-board [timeLeft]="timeLeft"></app-game-board>
   </ng-container>
 </ng-template>
 <ng-template #end>
-  You have aquired: {{ points }} points
+  You have aquired: {{ points - 1 }} points your stats: {{ stats }}
   <p>some nice graph showing the change of speed between levels</p>
   <button (click)="playAgain()">play again</button>
 </ng-template>

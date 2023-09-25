@@ -1,20 +1,38 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
-@Injectable()
+export type Stats = { level: number; reactionTime: number; mistakes: number };
+
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService {
-  POINTS: number = 0;
+  POINTS$ = new BehaviorSubject<number>(0);
+  STATS$ = new BehaviorSubject<Stats[]>([]);
 
-  getPoints() {
-    return this.POINTS;
+  getPoints(): Observable<number> {
+    console.log(this.POINTS$.subscribe((points) => console.log(points)));
+    return this.POINTS$.asObservable();
   }
 
-  increasePoints() {
-    this.POINTS++;
-    return this.POINTS;
+  increasePoints(points: number) {
+    this.POINTS$.next(points + 1);
+    console.log(this.POINTS$, 'adfgadf');
   }
 
   resetPoints() {
-    this.POINTS = 0;
-    return this.POINTS;
+    this.POINTS$.next(0);
+  }
+
+  getStats(): Observable<Stats[]> {
+    return this.STATS$.asObservable();
+  }
+
+  addNewStats(statsList: Stats[], statsObject: Stats) {
+    this.STATS$.next([...statsList, statsObject]);
+  }
+
+  resetStats() {
+    this.STATS$.next([]);
   }
 }
