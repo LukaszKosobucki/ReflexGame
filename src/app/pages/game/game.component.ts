@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { GameBoardComponent } from 'src/app/components/game-board/game-board.component';
-import { Stats, UserService } from 'src/app/services/user.service';
+import { UserService } from 'src/app/services/user.service';
+import { TimerService } from 'src/app/services/timer.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-game',
@@ -18,11 +20,13 @@ export class GameComponent implements OnInit {
   showGame!: boolean;
   endGame!: boolean;
   stats!: string;
-
-  constructor(private userService: UserService) {}
+  timerSubscription!: Subscription;
+  constructor(
+    private userService: UserService,
+    private timerService: TimerService
+  ) {}
 
   ngOnInit() {
-    this.timeLeft = 15;
     this.showGame = false;
     this.endGame = false;
     this.userService.getPoints().subscribe((points) => {
@@ -36,20 +40,21 @@ export class GameComponent implements OnInit {
 
   startTimer() {
     this.showGame = true;
-    this.interval = setInterval(() => {
-      if (this.timeLeft >= 0.1) {
-        this.timeLeft = Math.round((this.timeLeft - 0.1) * 10) / 10;
-      } else {
-        this.endGame = true;
-      }
-    }, 100);
+    this.timerSubscription = this.timerService.timer(15).subscribe({
+      next: (timeLeft) => (this.timeLeft = timeLeft),
+      error: () => console.log,
+      complete: () => (this.endGame = true),
+    });
+  }
+
+  ngOnDestroy() {
+    this.timerSubscription.unsubscribe();
   }
 
   playAgain() {
     clearInterval(this.interval);
     this.showGame = false;
     this.endGame = false;
-    this.timeLeft = 15;
     this.userService.resetPoints();
     this.userService.resetStats();
   }
