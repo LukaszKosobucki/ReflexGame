@@ -10,22 +10,20 @@ export class UserService {
   POINTS$ = new BehaviorSubject<number>(0);
   STATS$ = new BehaviorSubject<Stats[]>([]);
 
-  getPoints(): Observable<number> {
-    console.log(this.POINTS$.subscribe((points) => console.log(points)));
-    return this.POINTS$.asObservable();
+  getPoints(): BehaviorSubject<number> {
+    return this.POINTS$;
   }
 
   increasePoints(points: number) {
     this.POINTS$.next(points + 1);
-    console.log(this.POINTS$, 'adfgadf');
   }
 
   resetPoints() {
     this.POINTS$.next(0);
   }
 
-  getStats(): Observable<Stats[]> {
-    return this.STATS$.asObservable();
+  getStats(): BehaviorSubject<Stats[]> {
+    return this.STATS$;
   }
 
   addNewStats(statsList: Stats[], statsObject: Stats) {
