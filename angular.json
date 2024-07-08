@@ -65,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "reflex-game:build:production"
+              "buildTarget": "reflex-game:build:production"
             },
             "development": {
-              "browserTarget": "reflex-game:build:development"
+              "buildTarget": "reflex-game:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -76,7 +76,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "reflex-game:build"
+            "buildTarget": "reflex-game:build"
           }
         },
         "test": {
